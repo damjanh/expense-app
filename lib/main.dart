@@ -41,6 +41,27 @@ class HomeWidget extends StatelessWidget {
               child: Text('Chart'),
             ),
           ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                  ),
+                  FlatButton(
+                    child: Text('Add Transactions'),
+                    onPressed: () {},
+                    color: Colors.blue,
+                  )
+                ],
+              ),
+            ),
+          ),
           Column(
             children: <Widget>[
               ...transactions.map((transaction) {
