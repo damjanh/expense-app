@@ -27,6 +27,9 @@ class HomeWidget extends StatelessWidget {
         id: '2', title: 'Groceries', amount: 42.62, date: DateTime.now())
   ];
 
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,13 +52,17 @@ class HomeWidget extends StatelessWidget {
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(labelText: 'Title'),
+                    controller: titleController,
                   ),
                   TextField(
                     decoration: InputDecoration(labelText: 'Amount'),
+                    controller: amountController,
                   ),
                   FlatButton(
                     child: Text('Add Transactions'),
-                    onPressed: () {},
+                    onPressed: () {
+                      print(titleController.text + "---" + amountController.text);
+                    },
                     color: Colors.blue,
                   )
                 ],
