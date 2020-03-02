@@ -1,8 +1,8 @@
 import 'package:expenseapp/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/new_transaction.dart';
 import 'model/transaction.dart';
+import 'widgets/new_transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,6 +14,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
         accentColor: Colors.purpleAccent,
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'OpenSans',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'OpenSans',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+        ),
       ),
       home: HomeWidget(),
     );
@@ -44,9 +61,11 @@ class _HomeWidgetState extends State<HomeWidget> {
   }
 
   void _openNewTransactionModal(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (builderContext) {
-      return NewTransaction(_addNewTransaction);
-    });
+    showModalBottomSheet(
+        context: context,
+        builder: (builderContext) {
+          return NewTransaction(_addNewTransaction);
+        });
   }
 
   @override
@@ -79,7 +98,9 @@ class _HomeWidgetState extends State<HomeWidget> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add,),
+        child: Icon(
+          Icons.add,
+        ),
         onPressed: () => _openNewTransactionModal(context),
       ),
     );
