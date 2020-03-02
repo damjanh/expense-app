@@ -7,11 +7,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Expense',
+      title: 'Expense Tracker',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Text('Flutter Demo Home Page'),
+      home: HomeWidget(),
+    );
+  }
+}
+
+class HomeWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Expense Tracker'),
+      ),
+      body: Center(
+        child: Text("Main"),
+      ),
     );
   }
 }
