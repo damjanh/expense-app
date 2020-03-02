@@ -1,11 +1,17 @@
+import 'package:expenseapp/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/user_transactions.dart';
+import 'widgets/new_transaction.dart';
+import 'model/transaction.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,7 +24,35 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomeWidget extends StatelessWidget {
+class HomeWidget extends StatefulWidget {
+  @override
+  _HomeWidgetState createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends State<HomeWidget> {
+  final List<Transaction> _transactions = [
+    Transaction(
+        id: '1', title: 'New keyboard', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: '2', title: 'Groceries', amount: 42.62, date: DateTime.now())
+  ];
+
+  void _addNewTransaction(String title, double amount) {
+    final now = DateTime.now();
+    final newTransaction = Transaction(
+        id: now.toString(), title: title, amount: amount, date: now);
+
+    setState(() {
+      _transactions.add(newTransaction);
+    });
+  }
+
+  void _openNewTransactionModal(BuildContext context) {
+    showModalBottomSheet(context: context, builder: (builderContext) {
+      return NewTransaction(_addNewTransaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +64,7 @@ class HomeWidget extends StatelessWidget {
               Icons.add,
               color: Colors.white,
             ),
-            onPressed: null,
+            onPressed: () => _openNewTransactionModal(context),
           )
         ],
       ),
@@ -43,14 +77,14 @@ class HomeWidget extends StatelessWidget {
                 child: Text('Chart'),
               ),
             ),
-            UserTransactions(),
+            TransactionList(_transactions),
           ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add,),
-        onPressed: null,
+        onPressed: () => _openNewTransactionModal(context),
       ),
     );
   }
