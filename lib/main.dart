@@ -127,6 +127,7 @@ class _HomeWidgetState extends State<HomeWidget> {
       child: TransactionList(_transactions, _deleteTransaction),
     );
 
+    final mediaQuery = MediaQuery.of(context);
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
@@ -134,9 +135,9 @@ class _HomeWidgetState extends State<HomeWidget> {
           children: <Widget>[
             if (isLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.1,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -157,22 +158,23 @@ class _HomeWidgetState extends State<HomeWidget> {
               ),
             if (!isLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.3,
                 child: Chart(_recentTransactions),
               ),
             if (!isLandscape) transactionsList,
-            if (isLandscape) _showChart
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.5,
-                    child: Chart(_recentTransactions),
-                  )
-                : transactionsList,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (mediaQuery.size.height -
+                              appBar.preferredSize.height -
+                              mediaQuery.padding.top) *
+                          0.5,
+                      child: Chart(_recentTransactions),
+                    )
+                  : transactionsList,
           ],
         ),
       ),
