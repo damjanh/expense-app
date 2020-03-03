@@ -97,6 +97,17 @@ class _HomeWidgetState extends State<HomeWidget> {
       actions: <Widget>[
         IconButton(
           icon: Icon(
+            _showChart ? Icons.view_list : Icons.show_chart,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            setState(() {
+              _showChart = !_showChart;
+            });
+          },
+        ),
+        IconButton(
+          icon: Icon(
             Icons.add,
             color: Colors.white,
           ),
@@ -110,35 +121,41 @@ class _HomeWidgetState extends State<HomeWidget> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  'Show Chart',
-                ),
-                Switch(
-                  value: _showChart,
-                  onChanged: (value) {
-                    setState(() {
-                      _showChart = value;
-                    });
-                  },
-                ),
-              ],
+            Container(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.1,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Show Chart',
+                  ),
+                  Switch(
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
             _showChart
                 ? Container(
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
-                        0.3,
+                        0.5,
                     child: Chart(_recentTransactions),
                   )
                 : Container(
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
                             MediaQuery.of(context).padding.top) *
-                        0.7,
+                        0.9,
                     child: TransactionList(_transactions, _deleteTransaction),
                   ),
           ],
