@@ -92,20 +92,23 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('Expense Tracker'),
       actions: <Widget>[
-        IconButton(
-          icon: Icon(
-            _showChart ? Icons.view_list : Icons.show_chart,
-            color: Colors.white,
+        if (isLandscape)
+          IconButton(
+            icon: Icon(
+              _showChart ? Icons.view_list : Icons.show_chart,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {
+                _showChart = !_showChart;
+              });
+            },
           ),
-          onPressed: () {
-            setState(() {
-              _showChart = !_showChart;
-            });
-          },
-        ),
         IconButton(
           icon: Icon(
             Icons.add,
@@ -116,34 +119,52 @@ class _HomeWidgetState extends State<HomeWidget> {
       ],
     );
 
+    final transactionsList = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          (isLandscape ? 0.9 : 1),
+      child: TransactionList(_transactions, _deleteTransaction),
+    );
+
     return Scaffold(
       appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    'Show Chart',
-                  ),
-                  Switch(
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    },
-                  ),
-                ],
+            if (isLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.1,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      'Show Chart',
+                    ),
+                    Switch(
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
-            ),
-            _showChart
+            if (!isLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(_recentTransactions),
+              ),
+            if (!isLandscape) transactionsList,
+            if (isLandscape) _showChart
                 ? Container(
                     height: (MediaQuery.of(context).size.height -
                             appBar.preferredSize.height -
@@ -151,13 +172,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         0.5,
                     child: Chart(_recentTransactions),
                   )
-                : Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.9,
-                    child: TransactionList(_transactions, _deleteTransaction),
-                  ),
+                : transactionsList,
           ],
         ),
       ),
