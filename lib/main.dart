@@ -45,10 +45,10 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   final List<Transaction> _transactions = [
-//    Transaction(
-//        id: '1', title: 'New keyboard', amount: 69.99, date: DateTime.now()),
-//    Transaction(
-//        id: '2', title: 'Groceries', amount: 42.62, date: DateTime.now())
+    Transaction(
+        id: '1', title: 'New keyboard', amount: 69.99, date: DateTime.now()),
+    Transaction(
+        id: '2', title: 'Groceries', amount: 42.62, date: DateTime.now())
   ];
 
   List<Transaction> get _recentTransactions {
