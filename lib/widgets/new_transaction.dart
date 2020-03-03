@@ -45,57 +45,67 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: _titleController,
-              onSubmitted: (_) => _inputSubmit(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: _amountController,
-              keyboardType: TextInputType.numberWithOptions(
-                decimal: true,
-                signed: false,
+    final focus = FocusNode();
+    return SingleChildScrollView(
+      child: Card(
+        child: Container(
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: _titleController,
+                textInputAction: TextInputAction.next,
+                onSubmitted: (_) => FocusScope.of(context).requestFocus(focus),
               ),
-              onSubmitted: (_) => _inputSubmit(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectedDate == null
-                        ? 'No Date Chosen.'
-                        : DateFormat.yMMMd().format(_selectedDate)),
-                  ),
-                  FlatButton(
-                    textColor: Theme.of(context).primaryColor,
-                    child: Text(
-                      'Choose date',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: _amountController,
+                textInputAction: TextInputAction.done,
+                focusNode: focus,
+                keyboardType: TextInputType.numberWithOptions(
+                  decimal: true,
+                  signed: false,
+                ),
+                onSubmitted: (_) => FocusScope.of(context).unfocus(focusPrevious: false),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(_selectedDate == null
+                          ? 'No Date Chosen.'
+                          : DateFormat.yMMMd().format(_selectedDate)),
                     ),
-                    onPressed: () => _openDatePicker(context),
-                  )
-                ],
+                    FlatButton(
+                      textColor: Theme.of(context).primaryColor,
+                      child: Text(
+                        'Choose date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () => _openDatePicker(context),
+                    )
+                  ],
+                ),
               ),
-            ),
-            RaisedButton(
-              child: Text(
-                'Add Transactions',
-              ),
-              textColor: Theme.of(context).textTheme.button.color,
-              onPressed: _inputSubmit,
-              color: Theme.of(context).primaryColor,
-            )
-          ],
+              RaisedButton(
+                child: Text(
+                  'Add Transactions',
+                ),
+                textColor: Theme.of(context).textTheme.button.color,
+                onPressed: _inputSubmit,
+                color: Theme.of(context).primaryColor,
+              )
+            ],
+          ),
         ),
       ),
     );
