@@ -59,10 +59,9 @@ class _HomeWidgetState extends State<HomeWidget> {
         .toList();
   }
 
-  void _addNewTransaction(String title, double amount) {
-    final now = DateTime.now();
+  void _addNewTransaction(String title, double amount, DateTime date) {
     final newTransaction = Transaction(
-        id: now.toString(), title: title, amount: amount, date: now);
+        id: DateTime.now().toString(), title: title, amount: amount, date: date);
 
     setState(() {
       _transactions.add(newTransaction);

@@ -19,11 +19,11 @@ class _NewTransactionState extends State<NewTransaction> {
     final title = _titleController.text;
     final amount = double.parse(_amountController.text);
 
-    if (title.isEmpty || amount <= 0) {
+    if (title.isEmpty || amount <= 0 || _selectedDate == null) {
       return;
     }
 
-    widget.addNewTransaction(title, amount);
+    widget.addNewTransaction(title, amount, _selectedDate);
 
     Navigator.of(context).pop();
   }
