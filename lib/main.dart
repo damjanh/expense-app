@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:expenseapp/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
 
@@ -145,7 +147,8 @@ class _HomeWidgetState extends State<HomeWidget> {
                     Text(
                       'Show Chart',
                     ),
-                    Switch(
+                    Switch.adaptive(
+                      activeColor: Theme.of(context).accentColor,
                       value: _showChart,
                       onChanged: (value) {
                         setState(() {
@@ -179,7 +182,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: Platform.isIOS ? Container() : FloatingActionButton(
         child: Icon(
           Icons.add,
         ),
