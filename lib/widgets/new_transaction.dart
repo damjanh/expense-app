@@ -11,13 +11,13 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
   DateTime _selectedDate;
 
   void _inputSubmit() {
-    final title = titleController.text;
-    final amount = double.parse(amountController.text);
+    final title = _titleController.text;
+    final amount = double.parse(_amountController.text);
 
     if (title.isEmpty || amount <= 0) {
       return;
@@ -53,12 +53,12 @@ class _NewTransactionState extends State<NewTransaction> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(labelText: 'Title'),
-              controller: titleController,
+              controller: _titleController,
               onSubmitted: (_) => _inputSubmit(),
             ),
             TextField(
               decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.numberWithOptions(
                 decimal: true,
                 signed: false,
