@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../model/transaction.dart';
 import './transaction_item.dart';
+import '../model/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
@@ -34,11 +34,17 @@ class TransactionList extends StatelessWidget {
                 ],
               );
             })
-          : ListView.builder(
-              itemBuilder: (context, index) {
-                return TransactionItem(transaction: transactions[index], deleteTransaction: deleteTransaction);
-              },
-              itemCount: transactions.length,
+          : ListView(
+              children: <Widget>[
+                ...transactions
+                    .map(
+                      (transaction) => TransactionItem(
+                          key: ValueKey(transaction.id),
+                          transaction: transaction,
+                          deleteTransaction: deleteTransaction),
+                    )
+                    .toList()
+              ],
             ),
     );
   }

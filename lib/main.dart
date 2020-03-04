@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:expenseapp/widgets/transaction_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 
 import 'model/transaction.dart';
 import 'widgets/chart.dart';
@@ -55,9 +56,15 @@ class _HomeWidgetState extends State<HomeWidget> {
   bool _showChart = false;
   final List<Transaction> _transactions = [
     Transaction(
-        id: '1', title: 'New keyboard', amount: 69.99, date: DateTime.now()),
+        id: randomString(20),
+        title: 'New keyboard',
+        amount: 69.99,
+        date: DateTime.now()),
     Transaction(
-        id: '2', title: 'Groceries', amount: 42.62, date: DateTime.now())
+        id: randomString(20),
+        title: 'Groceries',
+        amount: 42.62,
+        date: DateTime.now())
   ];
 
   List<Transaction> get _recentTransactions {
@@ -69,7 +76,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   void _addNewTransaction(String title, double amount, DateTime date) {
     final newTransaction = Transaction(
-        id: DateTime.now().toString(),
+        id: randomString(20),
         title: title,
         amount: amount,
         date: date);
